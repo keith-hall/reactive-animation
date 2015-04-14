@@ -2,16 +2,16 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>ReactiveAnimation</id>
-        <version>1.0.14</version>
+        <version>$version$</version>
         <title>Reactive Animation</title>
         <authors>Keith Hall</authors>
         <owners>Keith Hall</owners>
-        <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
+        <licenseUrl>https://github.com/keith-hall/reactive-animation/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/keith-hall/reactive-animation</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Small, simple C# animation library built using the reactive extensions framework, utilizing Robert Penner's easing functions.  Does not make use of reflection, instead allowing the caller to use a function/monad to update their desired object.  Contains methods for animating Windows Forms Controls.
 
-Includes full source code and a LINQPad sample.</description>
+Includes a LINQPad sample.</description>
         <summary>C# animation library built using the reactive extensions framework</summary>
         <releaseNotes />
         <language>en-GB</language>
@@ -30,8 +30,10 @@ Includes full source code and a LINQPad sample.</description>
     <files>
         <file src="lib\net45\ReactiveAnimation.dll" target="lib\net45\ReactiveAnimation.dll" />
         <file src="linqpad-samples\Reactive Animation Sample.linq" target="linqpad-samples\Reactive Animation Sample.linq" />
+        <!--
         <file src="src\Animation.cs" target="src\Animation.cs" />
         <file src="src\Easing.cs" target="src\Easing.cs" />
         <file src="src\ObservableHelper.cs" target="src\ObservableHelper.cs" />
+        -->
     </files>
 </package>
