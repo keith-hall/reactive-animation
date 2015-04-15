@@ -53,7 +53,8 @@ namespace ReactiveAnimation {
 			if (cts == null)
 				cts = new CancellationTokenSource();
 			
-			relativeTo.DistinctUntilChanged().WithPrevious((prev, current) => new { prev, current })
+			relativeTo.DistinctUntilChanged()
+			.WithPrevious((prev, current) => new { prev, current })
 			.Skip(1) // ignore first value where there is no previous
 			.ObserveOn(ctrl).Subscribe(v => {
 				if (v.prev != v.current) {
@@ -69,6 +70,12 @@ namespace ReactiveAnimation {
 				}
 			}, cts.Token);
 			return cts;
+		}
+		
+		private static IObservable<TOutput> WithPrevious<TSource, TOutput> (this IObservable<TSource> source, Func<TSource, TSource, TOutput> projection) {
+			return source.Scan(Tuple.Create(default(TSource), default(TSource)),
+				(previous, current) => Tuple.Create(previous.Item2, current))
+					.Select(t => projection(t.Item1, t.Item2));
 		}
 	}
 }
