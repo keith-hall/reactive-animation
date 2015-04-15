@@ -60,6 +60,7 @@
     <Compile Include="src\Easing.cs" />
     <Compile Include="src\ObservableHelper.cs" />
     <Compile Include="src\Properties\AssemblyInfo.cs" />
+    <Compile Include="src\LinearAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
