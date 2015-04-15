@@ -1,3 +1,8 @@
+using System.Drawing;
+using System.Windows.Forms;
+using System.Reactive.Linq;
+using System.Threading;
+
 public static class LinearAnimation {
 	public struct Position<T> {
 		public T ObjectToAnimate;
