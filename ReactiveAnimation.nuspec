@@ -4,12 +4,13 @@
         <id>ReactiveAnimation</id>
         <version>$version$</version>
         <title>Reactive Animation</title>
-        <authors>Keith Hall</authors>
-        <owners>Keith Hall</owners>
+        <authors>$author$</authors>
+        <owners>$author$</owners>
         <licenseUrl>https://github.com/keith-hall/reactive-animation/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/keith-hall/reactive-animation</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Small, simple C# animation library built using the reactive extensions framework, utilizing Robert Penner's easing functions.  Does not make use of reflection, instead allowing the caller to use a function/monad to update their desired object.  Contains methods for animating Windows Forms Controls.
+        <description>Small, simple C# animation library built using the reactive extensions framework, utilizing Robert Penner's easing functions.  Does not make use of reflection, instead allowing the caller to use a function/monad/observer to update their desired object.
+Contains methods for animating Windows Forms Controls.
 
 Includes a LINQPad sample.</description>
         <summary>C# animation library built using the reactive extensions framework</summary>
@@ -17,23 +18,19 @@ Includes a LINQPad sample.</description>
         <language>en-GB</language>
         <tags>animation tween linqpad-samples Reactive Rx LINQ Observable Events</tags>
         <dependencies>
-            <group targetFramework=".NETFramework4.5">
+            <group>
                 <dependency id="Rx-Main" version="2.2.5" />
                 <dependency id="Rx-WinForms" version="2.2.5" />
             </group>
         </dependencies>
         <frameworkAssemblies>
-            <frameworkAssembly assemblyName="System.Windows.Forms" targetFramework=".NETFramework4.5" />
-            <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.5" />
+            <frameworkAssembly assemblyName="System.Windows.Forms" />
+            <frameworkAssembly assemblyName="System.Drawing" />
         </frameworkAssemblies>
     </metadata>
     <files>
-        <file src="lib\net45\ReactiveAnimation.dll" target="lib\net45\ReactiveAnimation.dll" />
+        <file src="bin\**\ReactiveAnimation.dll" target="lib" />
+        <file src="bin\**\ReactiveAnimation.xml" target="lib" />
         <file src="linqpad-samples\Reactive Animation Sample.linq" target="linqpad-samples\Reactive Animation Sample.linq" />
-        <!--
-        <file src="src\Animation.cs" target="src\Animation.cs" />
-        <file src="src\Easing.cs" target="src\Easing.cs" />
-        <file src="src\ObservableHelper.cs" target="src\ObservableHelper.cs" />
-        -->
     </files>
 </package>
