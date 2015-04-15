@@ -9,7 +9,7 @@ namespace ReactiveAnimation
 {
 	public static class ObservableHelper
 	{
-		private static IObservable<T> PositionBasedOnControl<TEventArgs>(IObservable<EventPattern<object, TEventArgs>> events, Control ctrl, Func<Control, T> getNewPosition) where TEventArgs : EventArgs
+		private static IObservable<T> PositionBasedOnControl<T, TEventArgs>(IObservable<EventPattern<object, TEventArgs>> events, Control ctrl, Func<Control, T> getNewPosition) where TEventArgs : EventArgs
 		{
 			return Observable.Defer(() => FixedValue(getNewPosition(ctrl))).Concat(events.Select(e => getNewPosition(ctrl)).ObserveOn(ctrl));
 		}
@@ -19,7 +19,7 @@ namespace ReactiveAnimation
 		/// </summary>
 		/// <param name="ctrlDestination">The control to observe.</param>
 		/// <returns>An observable with the position relative to <paramref name="ctrlDestination"/>.</returns>
-		public static IObservable<T> PositionBasedOnControl(Control ctrlDestination, Func<Control, T> getNewPosition)
+		public static IObservable<T> PositionBasedOnControl<T>(Control ctrlDestination, Func<Control, T> getNewPosition)
 		{
 			return PositionBasedOnControl(Observable.FromEventPattern(ev => ctrlDestination.Move += ev, ev => { if (ctrlDestination != null && !ctrlDestination.IsDisposed) ctrlDestination.Move -= ev; }), ctrlDestination, getNewPosition);
 		}
@@ -29,7 +29,7 @@ namespace ReactiveAnimation
 		/// </summary>
 		/// <param name="ctrl">The control whose parent to observe for size changes.</param>
 		/// <returns>An observable with the position relative to the size of <paramref name="ctrl"/>'s parent.</returns>
-		public static IObservable<T> PositionBasedOnParent(Control ctrl, Func<Control, T> getNewPosition)
+		public static IObservable<T> PositionBasedOnParent<T>(Control ctrl, Func<Control, T> getNewPosition)
 		{
 			return PositionBasedOnControl(Observable.FromEventPattern(ev => ctrl.Parent.ClientSizeChanged += ev, ev => { if (ctrl != null && !ctrl.IsDisposed) ctrl.Parent.ClientSizeChanged -= ev; }), ctrl, getNewPosition);
 		}
