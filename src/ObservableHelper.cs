@@ -54,7 +54,7 @@ namespace ReactiveAnimation
 		/// <param name="projection">the projection to apply to get the output</param>
 		/// <returns>an observable coupled with it's previous value</returns>
 		public static IObservable<TOutput> ObserveWithPrevious<TSource, TOutput> (IObservable<TSource> source, Func<TSource, TSource, TOutput> projection) {
-			source.Scan(Tuple.Create(default(TSource), default(TSource)),
+			return source.Scan(Tuple.Create(default(TSource), default(TSource)),
 			(previous, current) => Tuple.Create(previous.Item2, current))
 				.Select(t => projection(t.Item1, t.Item2));
 		}
