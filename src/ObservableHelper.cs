@@ -46,5 +46,16 @@ namespace ReactiveAnimation
 			var originalYPerc = (float)ctrl.Top / (float)ps.Height;
 			return PositionBasedOnParent(ctrl, c => new Rectangle((int)((float)c.Parent.ClientSize.Width * originalXPerc), (int)((float)c.Parent.ClientSize.Height * originalYPerc), c.Width, c.Height));
 		}
+		
+		/// <summary>
+		/// get an observable coupled with it's previous value
+		/// </summary>
+		/// <param name="source">the source observable</param>
+		/// <param name="projection">the projection to apply to get the output</param>
+		/// <returns>an observable coupled with it's previous value</returns>
+		public static IObservable<TOutput> ObserveWithPrevious<TSource, TOutput> (IObservable<TSource> source, Func<TSource, TSource, TOutput> projection) {
+			return source.Scan(Tuple.Create(default(TSource), default(TSource)),
+				(previous, current) => projection(previous.Item2, current));
+		}
 	}
 }
