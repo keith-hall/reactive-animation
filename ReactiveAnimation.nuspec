@@ -9,7 +9,7 @@
         <licenseUrl>https://github.com/keith-hall/reactive-animation/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/keith-hall/reactive-animation</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Small, simple C# animation library built using the reactive extensions framework, utilizing Robert Penner's easing functions.  Does not make use of reflection, instead allowing the caller to use a function/monad/observer to update their desired object.
+        <description>Small, simple open-source C# animation library built using the reactive extensions framework, utilizing Robert Penner's easing functions.  Does not make use of reflection, instead allowing the caller to use a function/monad/observer to update their desired object.
 Contains methods for animating Windows Forms Controls.
 
 Includes a LINQPad sample.</description>
