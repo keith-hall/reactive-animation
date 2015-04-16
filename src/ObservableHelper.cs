@@ -9,7 +9,7 @@ namespace ReactiveAnimation
 {
 	public static class ObservableHelper
 	{
-		private static IObservable<T> PositionBasedOnControl<T, TEventArgs>(IObservable<EventPattern<object, TEventArgs>> events, Control ctrl, Func<Control, T> getNewPosition) where TEventArgs : EventArgs
+		private static IObservable<T> PositionBasedOnControl<T>(IObservable<EventPattern<object>> events, Control ctrl, Func<Control, T> getNewPosition) 
 		{
 			return Observable.Defer(() => FixedValue(getNewPosition(ctrl))).Concat(events.Select(e => getNewPosition(ctrl)).ObserveOn(ctrl));
 		}
