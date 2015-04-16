@@ -29,8 +29,8 @@ Includes a LINQPad sample.</description>
         </frameworkAssemblies>
     </metadata>
     <files>
-        <file src="bin\**\ReactiveAnimation.dll" target="lib" />
-        <file src="bin\**\ReactiveAnimation.xml" target="lib" />
+        <file src="bin\Release\ReactiveAnimation.dll" target="lib" />
+        <file src="bin\Release\ReactiveAnimation.xml" target="lib" />
         <file src="linqpad-samples\Reactive Animation Sample.linq" target="linqpad-samples\Reactive Animation Sample.linq" />
     </files>
 </package>
