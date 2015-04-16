@@ -29,7 +29,7 @@ void Main() // LINQPad sample
 	//newPosForB.DumpLatest(true); // commented out due to LINQPad not focusing the form when there are dumped objects
 	//newPosForB2.Dump();
 	a.AnimateControlPosition(b, ObservableHelper.FixedValue(b.Bounds), newPosForB);
-	a.AnimateControlPosition(b2, ObservableHelper.FixedPositionRelativeToParent(b2), newPosForB2);
+	a.AnimateControlPosition(b2, ObservableHelper.FixedPositionRelativeToParent(b2).Select(p => new Rectangle(p.X, p.Y, b2.Width, b2.Height)), newPosForB2);
 	
 	a.AnimateOnControlThread(f, ObservableHelper.FixedValue((float)0.8), ObservableHelper.FixedValue((float)1), v => f.Opacity = v.CurrentValue);
 	
