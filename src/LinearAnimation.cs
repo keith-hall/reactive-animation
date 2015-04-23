@@ -5,6 +5,10 @@ using System.Threading;
 using System;
 
 namespace ReactiveAnimation {
+	/// <summary>
+	/// This static class is designed to help with linear animation - i.e. with no easing function,
+	/// when you want an animation with a set speed rather than a set duration.
+	/// </summary>
 	public static class LinearAnimation {
 		public struct Position<T> {
 			public T ObjectToAnimate;
