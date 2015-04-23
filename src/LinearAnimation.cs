@@ -12,21 +12,22 @@ namespace ReactiveAnimation {
 			public Point DesiredPosition;
 		}
 		
+		public static int GetPositionOneStepCloserToDestination (int currentPos, int targetPos, int speed) {
+			speed = Math.Abs(speed);
+			if (currentPos == targetPos) // if it is already at the desired position
+				return targetPos; // return it
+			var distance = currentPos - targetPos; // determine the distance between the current position and the desired position
+			if (Math.Abs(distance) < speed) // if it is less than the speed
+				return targetPos; // return the desired position
+			return currentPos + ((currentPos > targetPos) ? -speed : speed); // return the value after the speed (towards the desired position) has been applied
+		}
+		
 		private static Position<T> GetNewPosition<T> (T objectToAnimate, Func<T, Point> currentPosition, Point desiredPosition, int speed) {
-			// NOTE: assumes that speed is a positive number
-			Func<int, int, int> getNewPos = (f, t) => {
-				if (f == t) // if it is already at the desired position
-					return t; // return it
-				var d = f - t; // determine the distance between the current position and the desired position
-				if (Math.Abs(d) < speed) // if it is less than the speed
-					return t; // return the desired position
-				return f + ((f > t) ? -speed : speed); // return the value after the speed (towards the desired position) has been applied
-			};
 			var c = currentPosition(objectToAnimate);
 			var p = new Position<T> {
 				ObjectToAnimate = objectToAnimate, 
 				DesiredPosition = desiredPosition,
-				NewPosition = new Point(getNewPos(c.X, desiredPosition.X), getNewPos(c.Y, desiredPosition.Y))
+				NewPosition = new Point(GetPositionOneStepCloserToDestination(c.X, desiredPosition.X, speed), GetPositionOneStepCloserToDestination(c.Y, desiredPosition.Y, speed))
 			};
 			return p;
 		}
