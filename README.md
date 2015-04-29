@@ -35,4 +35,14 @@ a.AnimateOnControlThread(
 a.Start();
 ```
 
+- Or, if you want to animate a Windows Form Control without an easing function, and you want a specific speed as opposed to a set duration, you can use the LinearAnimation static class.
+```cs
+var cts = LinearAnimation.AnimateControl(
+  button, // control to animate
+  ObservableHelper.FixedValue(new Point(0, 150)), // animate until at this position
+  ObservableHelper.FixedValue(5), // speed to move at
+  true); // keep in same relative position when the control's parent resizes
+// returns a CancellationTokenSource that you can use to cancel the animation
+```
+
 [![MyGet Build Status](https://www.myget.org/BuildSource/Badge/progamer-me?identifier=e8f7d0bd-e97a-4f4d-be10-e3d80f613a26)](https://www.myget.org/)
