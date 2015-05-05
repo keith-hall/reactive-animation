@@ -11,10 +11,16 @@ using AnimatableValue = System.Collections.Generic.KeyValuePair<string, float>;
 
 namespace ReactiveAnimation
 {
+	/// <summary>
+	/// Used to create a new animation, with a set duration and specific easing function, that can then be used to tween multiple properties.
+	/// </summary>
 	public class Animation : IDisposable
 	{
 		public const int FrameRate = 60;
-
+		
+		/// <summary>
+		/// An observable that pulses on every frame.
+		/// </summary>
 		public static readonly IObservable<long> EveryFrame = Observable.Interval(TimeSpan.FromMilliseconds((double)1000 / (double)FrameRate)) // create a cold observable
 																		.Publish().RefCount(); // only pulse while subscribers are connected
 		/// <summary>
@@ -59,7 +65,10 @@ namespace ReactiveAnimation
 		}
 
 		internal Subject<float> _progress;
-
+		
+		/// <summary>
+		/// An observable that pulses on every frame while the animation is running, with the eased percentage completion of the animation.
+		/// </summary>
 		public IObservable<float> Progress
 		{
 			get
@@ -70,7 +79,7 @@ namespace ReactiveAnimation
 		public Func<double, float> EasingFunction { get; set; }
 		internal CancellationTokenSource _cancelProgress;
 		//x internal List<CancellationTokenSource> _cancelChildren;
-
+		
 		public bool IsRunning
 		{
 			get
@@ -160,7 +169,10 @@ namespace ReactiveAnimation
 			Pause();
 			GoToSpecificFrame(DurationInFrames);
 		}
-
+		
+		/// <summary>
+		/// Contains useful information about the progress of specific values in the animation.
+		/// </summary>
 		public struct AnimationProgress
 		{
 			public string Key { get; internal set; }
