@@ -17,12 +17,21 @@ namespace ReactiveAnimation
 
 		public static readonly IObservable<long> EveryFrame = Observable.Interval(TimeSpan.FromMilliseconds((double)1000 / (double)FrameRate)) // create a cold observable
 																		.Publish().RefCount(); // only pulse while subscribers are connected
-
-		public static int FromTimeSpanToDurationInFrames(TimeSpan time)
+		/// <summary>
+		/// Convert the given <paramref name="timespan"/> to a duration in frames, based on the framerate.
+		/// </summary>
+		/// <param name="timespan">The duration to convert to frames.</param>
+		/// <returns>The number of frames in the specified <paramref name="timespan"/>.</returns>
+		public static int FromTimeSpanToDurationInFrames(TimeSpan timespan)
 		{
-			return FromTimeSpanToDurationInFrames(time.TotalSeconds);
+			return FromTimeSpanToDurationInFrames(timespan.TotalSeconds);
 		}
-
+		
+		/// <summary>
+		/// Convert the given number of <paramref name="seconds"/> to a duration in frames, based on the framerate.
+		/// </summary>
+		/// <param name="seconds">The duration to convert to frames.</param>
+		/// <returns>The number of frames in the specified <paramref name="seconds"/>.</returns>
 		public static int FromTimeSpanToDurationInFrames(double seconds)
 		{
 			return (int)(seconds * FrameRate);
