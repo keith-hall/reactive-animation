@@ -111,7 +111,7 @@ namespace ReactiveAnimation
 										 { // if the animation is complete, cancel it to break out of this subscription to EveryFrame
 											 //? NOTE: we actually do this on the next frame to ensure the subscribers have had time to process the completion... maybe this is a HACK: ?
 											 Pause();
-											 CleanUp();
+											 Dispose(true);
 											 return;
 										 }
 										 _cancelProgress.Token.ThrowIfCancellationRequested();
@@ -298,15 +298,26 @@ namespace ReactiveAnimation
 
 		public void Dispose()
 		{
-			CleanUp();
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 
-		private void CleanUp()
+		protected virtual void Dispose(bool isDisposing)
 		{
-			Pause();
-			//x foreach (var cts in _cancelChildren)
-			//x 	cts.Cancel();
-			_progress.Dispose();
+			// Don't dispose more than once.
+			if (alreadyDisposed)
+				return;
+			if (isDisposing)
+			{
+				// free managed resources
+				Pause();
+				//x foreach (var cts in _cancelChildren)
+				//x 	cts.Cancel();
+				_progress.Dispose();
+			}
+			// free unmanaged resources
+			
+			alreadyDisposed = true;
 		}
 	}
 }
