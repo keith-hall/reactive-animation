@@ -46,7 +46,8 @@ namespace ReactiveAnimation
 
 		internal int _elapsedFrames = 0;
 		private int _durationInFrames = FrameRate; // default to a duration of 1 second
-
+		private bool _alreadyDisposed = false;
+		
 		public int DurationInFrames
 		{
 			get
@@ -55,6 +56,8 @@ namespace ReactiveAnimation
 			}
 			set
 			{
+				if (_alreadyDisposed)
+					throw new ObjectDisposedException("Animation"); // TODO: use nameof
 				if (value < 1)
 					throw new ArgumentOutOfRangeException("Duration", "Duration cannot be less than one frame");
 				else if (value < _elapsedFrames)
@@ -73,6 +76,8 @@ namespace ReactiveAnimation
 		{
 			get
 			{
+				if (_alreadyDisposed)
+					throw new ObjectDisposedException("Animation"); // TODO: use nameof
 				return _progress.AsObservable(); // best to hide the identity of a subject, because we don't need to expose state information
 			}
 		}
@@ -84,6 +89,8 @@ namespace ReactiveAnimation
 		{
 			get
 			{
+				if (_alreadyDisposed)
+					throw new ObjectDisposedException("Animation"); // TODO: use nameof
 				return _cancelProgress != null && !_cancelProgress.IsCancellationRequested;
 			}
 		}
@@ -143,6 +150,8 @@ namespace ReactiveAnimation
 
 		public void Pause()
 		{
+			if (_alreadyDisposed)
+				throw new ObjectDisposedException("Animation"); // TODO: use nameof
 			if (_cancelProgress != null)
 				_cancelProgress.Cancel();
 		}
@@ -156,6 +165,8 @@ namespace ReactiveAnimation
 
 		public void GoToSpecificFrame(int frameNumber)
 		{
+			if (_alreadyDisposed)
+				throw new ObjectDisposedException("Animation"); // TODO: use nameof
 			if (frameNumber < 0 || frameNumber > DurationInFrames)
 				throw new ArgumentOutOfRangeException("frameNumber");
 			//? TODO: enforce that the animation is paused first? else may have threading issues whereby the elapsed frames is greater than the duration?
@@ -305,7 +316,7 @@ namespace ReactiveAnimation
 		protected virtual void Dispose(bool isDisposing)
 		{
 			// Don't dispose more than once.
-			if (alreadyDisposed)
+			if (_alreadyDisposed)
 				return;
 			if (isDisposing)
 			{
@@ -317,7 +328,7 @@ namespace ReactiveAnimation
 			}
 			// free unmanaged resources
 			
-			alreadyDisposed = true;
+			_alreadyDisposed = true;
 		}
 	}
 }
