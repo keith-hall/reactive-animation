@@ -56,8 +56,7 @@ namespace ReactiveAnimation
 			}
 			set
 			{
-				if (_alreadyDisposed)
-					throw new ObjectDisposedException("Animation"); // TODO: use nameof
+				CheckNotDisposed();
 				if (value < 1)
 					throw new ArgumentOutOfRangeException("Duration", "Duration cannot be less than one frame");
 				else if (value < _elapsedFrames)
@@ -76,8 +75,7 @@ namespace ReactiveAnimation
 		{
 			get
 			{
-				if (_alreadyDisposed)
-					throw new ObjectDisposedException("Animation"); // TODO: use nameof
+				CheckNotDisposed();
 				return _progress.AsObservable(); // best to hide the identity of a subject, because we don't need to expose state information
 			}
 		}
@@ -89,8 +87,7 @@ namespace ReactiveAnimation
 		{
 			get
 			{
-				if (_alreadyDisposed)
-					throw new ObjectDisposedException("Animation"); // TODO: use nameof
+				CheckNotDisposed();
 				return _cancelProgress != null && !_cancelProgress.IsCancellationRequested;
 			}
 		}
@@ -150,8 +147,7 @@ namespace ReactiveAnimation
 
 		public void Pause()
 		{
-			if (_alreadyDisposed)
-				throw new ObjectDisposedException("Animation"); // TODO: use nameof
+			CheckNotDisposed();
 			if (_cancelProgress != null)
 				_cancelProgress.Cancel();
 		}
@@ -165,8 +161,7 @@ namespace ReactiveAnimation
 
 		public void GoToSpecificFrame(int frameNumber)
 		{
-			if (_alreadyDisposed)
-				throw new ObjectDisposedException("Animation"); // TODO: use nameof
+			CheckNotDisposed();
 			if (frameNumber < 0 || frameNumber > DurationInFrames)
 				throw new ArgumentOutOfRangeException("frameNumber");
 			//? TODO: enforce that the animation is paused first? else may have threading issues whereby the elapsed frames is greater than the duration?
@@ -329,6 +324,12 @@ namespace ReactiveAnimation
 			// free unmanaged resources
 			
 			_alreadyDisposed = true;
+		}
+		
+		protected void CheckNotDisposed()
+		{
+			if (_alreadyDisposed)
+				throw new ObjectDisposedException(this.GetType().Name); // TODO: use nameof
 		}
 	}
 }
