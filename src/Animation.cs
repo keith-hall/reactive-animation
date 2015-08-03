@@ -58,9 +58,9 @@ namespace ReactiveAnimation
 			{
 				CheckNotDisposed();
 				if (value < 1)
-					throw new ArgumentOutOfRangeException("Duration", "Duration cannot be less than one frame");
+					throw new ArgumentOutOfRangeException(nameof(DurationInFrames), "Duration cannot be less than one frame");
 				else if (value < _elapsedFrames)
-					throw new ArgumentOutOfRangeException("Duration", "Duration cannot be less than elapsed frames.  If you want a shorter duration, you will need to restart the animation.");
+					throw new ArgumentOutOfRangeException(nameof(DurationInFrames), "Duration cannot be less than elapsed frames.  If you want a shorter duration, you will need to restart the animation.");
 				else
 					_durationInFrames = value;
 			}
@@ -163,7 +163,7 @@ namespace ReactiveAnimation
 		{
 			CheckNotDisposed();
 			if (frameNumber < 0 || frameNumber > DurationInFrames)
-				throw new ArgumentOutOfRangeException("frameNumber");
+				throw new ArgumentOutOfRangeException(nameof(frameNumber));
 			//? TODO: enforce that the animation is paused first? else may have threading issues whereby the elapsed frames is greater than the duration?
 
 			_elapsedFrames = frameNumber;
@@ -329,7 +329,7 @@ namespace ReactiveAnimation
 		protected void CheckNotDisposed()
 		{
 			if (_alreadyDisposed)
-				throw new ObjectDisposedException(this.GetType().Name); // TODO: use nameof
+				throw new ObjectDisposedException(this.GetType().Name);
 		}
 	}
 }
